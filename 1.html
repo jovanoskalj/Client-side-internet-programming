@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+<script>
+    var niza=[];
+var n= prompt("Kolku elementi ke ima nizata? ");
+for (var i=0;i<n;i++) {
+    niza[i] = prompt("Vnesi elementi");
+}
+console.log(niza);
+deleteduplicates(niza)
+function deleteduplicates(niza){
+    var nova=[];
+    for (var i=0;i<niza.length;i++){
+        if(!nova.includes(niza[i])){
+            nova.push(niza[i]);
+        }
+    }
+    console.log(nova);
+}
+
+</script>
+</body>
+</html>

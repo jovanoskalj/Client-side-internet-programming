@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Оцени</title>
+</head>
+<body>
+<style>
+    table,tr,td,th,thead{
+        border: 1px solid black;
+    }
+    input, option{
+        position: relative;
+        left: 140px;
+        top:-33px;
+    }
+   .brojki{
+        position: relative;
+        left: 140px;
+        top:-33px;
+    }
+   ul{
+       position: relative;
+       left: 500px;
+       top:-400px;
+   }
+  #session{
+      position: relative;
+      left: 140px;
+      top:-33px;
+  }
+  button{
+      display: block;
+  }
+
+</style>
+<h2> Details</h2>
+<p>Name</p>
+<input id="name"type="text">
+<p>Index</p>
+<input id="index"type="text">
+<p>Phone</p>
+<input id="phone"type="number">
+<p>Grade</p>
+<form id="forma">
+  <input type="radio" name="grade" id="5" value="5"> <span class="brojki"> 5 </span>
+  <input type="radio" name="grade" id="6" value="6"> <span class="brojki"> 6</span>
+  <input type="radio" name="grade" id="7" value="7">  <span class="brojki"> 7</span>
+    <input type="radio" name="grade" id="8" value="8"> <span class="brojki"> 8</span>
+    <input type="radio" name="grade" id="9" value="9"> <span class="brojki" > 9</span>
+    <input type="radio" name="grade" id="10" value="10"> <span class="brojki">10</span>
+</form>
+<p>Session</p>
+<select id="session">
+    <option id="prazno"> </option>
+    <option> January</option>
+    <option>  June</option>
+    <option>  September</option>
+</select>
+<button onclick="proverka()">Import student</button>
+<ul id="history">
+    <h3>Revert history</h3>
+
+</ul>
+
+<h2>Students (average grade: <span id="prosek">0</span>)</h2>
+<table>
+    <thead>
+    <th>Name</th>
+    <th>Index</th>
+    <th>Phone</th>
+    <th>Grade</th>
+    <th>Session</th>
+    <th>Actions</th>
+    </thead>
+</table>
+<script>
+var brojac=0;
+var suma=0;
+var prosek=0;
+function proverka(){
+    //proverka dali site se popolnati
+    var x= document.getElementsByTagName("input");
+    var y= document.getElementById("forma");
+    var z= document.getElementById("prazno").selected;
+
+    for(var i=0;i<x.length;i++){
+        if(x[i].value===''){
+            alert("Пополни ги сите полиња!");
+            return;
+        }
+    }
+    var flag=0;
+    for (var i=0;i<y.length;i++){
+        if(y[i].checked){
+            flag=1;
+        }
+    }
+    if(flag==0){
+        alert("Пополни ги сите полиња!");
+        return;
+    }
+    if(z===true){
+        alert("Пополни ги сите полиња!");
+
+
+        return;
+    }
+tabela();
+}
+function tabela() {
+    var ime = document.getElementById("name").value;
+    var index = document.getElementById("index").value;
+    var phone = document.getElementById("phone").value;
+    phone.toString();
+    var pr= document.getElementById("prosek");
+    var grade = document.getElementById("forma");
+    var ocena;
+
+    for (var i = 0; i < grade.length; i++) {
+        if (grade[i].checked) {
+            ocena = grade[i].value;
+            brojac++;
+            suma+=parseInt(ocena);
+            prosek=suma/brojac;
+            pr.innerHTML=prosek;
+
+        }
+    }
+    console.log(brojac,suma);
+    var s = document.getElementById("session");
+    var sesija = ''
+    for (var i = 0; i < s.length; i++) {
+        if (s[i].selected) {
+            sesija += s[i].value;
+        }
+    }
+    console.log(ime, index, phone, ocena, sesija);
+    var final_broj = phone.slice(0, 3) + '/' + phone.slice(3, 6) + '-' + phone.slice(6, 9);
+    console.log(final_broj);
+
+//dodavanje redica
+var tabela= document.getElementsByTagName("table");
+var red = document.createElement("tr");
+red.innerHTML="<td> "+ ime +"</td><td>"+ index +"</td><td>"+ final_broj + "</td><td>"+ ocena +"</td><td>"+ sesija +"</td><td> <button onclick='potvrdi(this)'>Confirm</button><button onclick='premesti(this)'>Revert</button></td>"
+    tabela[0].appendChild(red);
+}
+function potvrdi(kopce){
+    kopce.disabled=true;
+    kopce.nextElementSibling.disabled=true;
+    var red = kopce.closest('tr');
+    red.style.background="lightgreen";
+
+}
+function  premesti(kopce){
+var indeks = document.getElementById("index").value;
+var grade = document.getElementById("forma");
+var ocenka=0;
+var pr= document.getElementById("prosek");
+    for (var i = 0; i < grade.length; i++) {
+        if (grade[i].checked) {
+            ocenka = grade[i].value;
+            brojac--;
+            suma-=parseInt(ocenka);
+            prosek=suma/brojac;
+            pr.innerHTML=prosek;
+           if(brojac==0){
+               pr.innerHTML='0';
+           }
+
+
+        }
+    }
+    var red = kopce.closest('tr');
+    red.remove();
+var history = document.getElementById("history");
+var listi= document.createElement("li");
+listi.innerHTML="<p>"+ indeks +" - grade "+ocenka+"</p>";
+history.append(listi);
+
+}
+</script>
+</body>
+</html>

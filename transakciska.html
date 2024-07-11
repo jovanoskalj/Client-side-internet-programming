@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Flip Store Check</title>
+</head>
+<body>
+<input id="broj" type="number"> <button id="pomalo" onclick="pomalo()"><</button><button id="pogolemo" onclick="pogolemo()">></button><button id="flip" onclick="flip()">FLIP</button><button id="store" onclick="stored()">STORE</button><button id="proveri" onclick="proveri()">CHECK</button>
+<p id="perfekten">
+
+</p>
+<div>
+  <ul id="lista">
+
+  </ul>
+</div>
+
+<script>
+
+  function pomalo() {
+    var broj = document.getElementById("broj");
+    if (broj.value === "") {
+      alert("Vnesete broj");
+    }
+    if (broj.value.length !== 10) {
+      alert("Vnesete deset cifren broj");
+    }
+    var temp = broj.value;
+    var prv = temp.charAt(0);
+    var delce = temp.slice(1, 10);
+    console.log(delce);
+    var spoj = delce + prv;
+    console.log(spoj);
+    broj.value = spoj;
+  }
+  function pogolemo() {
+    var broj = document.getElementById("broj");
+
+    if (broj.value === "") {
+      alert("Vnesete broj");
+    }
+    if (broj.value.length !== 10) {
+      alert("Vnesete deset cifren broj");
+    }
+
+    var temp = broj.value;
+    var posleden = temp.charAt(9);
+    var delce = temp.slice(0, 9);
+    console.log(delce);
+    var spoj = posleden+delce;
+    console.log(spoj);
+    broj.value = spoj;
+  }
+
+  function flip(){
+    var broj = document.getElementById("broj");
+
+    if (broj.value === "") {
+      alert("Vnesete broj");
+    }
+    if (broj.value.length !== 10) {
+      alert("Vnesete deset cifren broj");
+    }
+
+    var temp = broj.value;
+    temp = parseInt(temp);
+    var obraten =0;
+    var parsedTemp = parseInt(temp);
+    while(parsedTemp){
+      var cifra = parsedTemp%10;
+      obraten=Math.floor(obraten*10 + cifra);
+      parsedTemp=Math.floor(parsedTemp/10);
+    }
+    console.log(obraten);
+    broj.value=obraten;
+  }
+
+  function proveri(){
+    var broj = document.getElementById("broj");
+
+    if (broj.value === "") {
+      alert("Vnesete broj");
+    }
+    if (broj.value.length !== 10) {
+      alert("Vnesete deset cifren broj");
+    }
+    var flag=0;
+    for(var i=0; i<broj.value.length;i++){
+      if(parseInt(broj.value.charAt(i)) % 2 ===0 && parseInt(broj.value.charAt(i+1)) %2===0){
+        flag=1;
+      }
+      else {
+        flag=0;
+        break;
+      }
+    }
+    var tekst= document.getElementById("perfekten");
+    var glaven  = document.createElement("p");
+    if(flag===1){
+
+      glaven.innerHTML="<p>Perfekten - " + broj.value + "</p>";
+      tekst.append(glaven);
+      return;
+    }
+    console.log(glaven.innerHTML);
+  }
+
+
+  function stored() {
+    var broj = document.getElementById("broj");
+
+    if (broj.value === "") {
+      alert("Vnesete broj");
+    }
+    if (broj.value.length !== 10) {
+      alert("Vnesete deset cifren broj");
+    }
+    var lista = document.getElementById("lista");
+    var nov = document.createElement("li");
+    nov.innerHTML = broj.value;
+    lista.append(nov);
+    broj.value="";
+  }
+</script>
+</body>
+</html>

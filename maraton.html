@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Маратон</title>
+</head>
+<body>
+<style>
+  input,select{
+    position: relative;
+    left: 80px;
+    top:-35px;
+  }
+button{
+  display: block;
+  /*margin-bottom: 20px;*/
+}
+table,th,tr,td{
+  border: 0.2px solid black;
+}
+</style>
+<h2>Учесници на маратон</h2>
+<p>Име</p>
+<input id="ime">
+<p>Презиме</p>
+<input id="prezime">
+<p>Години</p>
+<input id="godini" type="number">
+<p>Код</p>
+<input id="kod">
+<p>Пол</p>
+<select id="pol">
+  <option id="prazno" value="Празен"></option>
+  <option  id="masko" value="Машко">Машко</option>
+  <option value="Женско">Женско</option>
+</select>
+<button onclick="proverka()">Додади</button>
+<table>
+  <thead>
+  <tr>
+  <th>Име</th>
+  <th>Презиме</th>
+  <th>Таг</th>
+  <th>Опции </th>
+  </tr>
+  </thead>
+
+</table>
+<h2>Вкупно потврдени учесници: <span id="potrvdeni">0</span></h2>
+
+<script>
+
+
+  var brojac=0;
+  function  proverka(){
+    var x= document.getElementsByTagName("input");
+    var y= document.getElementById("prazno");
+    for (var i=0;i<x.length;i++){
+      if(x[i].value===''|| y.selected===true){
+        alert("Пополни ги сите полиња!");
+        return;
+      }
+    }
+    dodadi();
+
+  }
+  function dodadi(){
+    //tag
+    var kod = document.getElementById("kod").value;
+    var tag = '';
+    console.log(kod);
+    for (var i = 0; i < kod.length; i++) {
+      if (!isNaN(kod[i])) {
+        if (kod[i] < '5') {
+          tag += kod[i];
+        }
+      } else {
+        if (/[A-Z]/.test(kod[i])) {
+          tag += kod[i].toLowerCase();
+        } else {
+          tag += kod[i].toUpperCase();
+        }
+      }
+    }
+    console.log(tag);
+    //zemi podatoci
+
+    var ime= document.getElementById("ime").value;
+    var prezime= document.getElementById("prezime").value;
+    var vozrast = document.getElementById("godini").value;
+
+
+    //dodadi vo tabela
+
+    var tabela = document.getElementsByTagName("table");
+    var red = document.createElement("tr");
+    if(vozrast<=18){
+      red.innerHTML="<td>"+ ime +" </td><td>"+ prezime +"</td> <td>"+ tag +"</td><td> <button onclick='potvrda(this);boja()'>Потврди </button> <button onclick='izbrisi(this)' > Избриши</button></td>";
+      tabela[0].appendChild(red);
+    }
+    else{
+      red.innerHTML="<td>"+ ime +" </td><td>"+ prezime +"</td> <td>"+ tag +"</td><td> <button disabled='true' onclick='potvrda(this)'>Потврди </button> <button disabled='true' onclick='izbrisi(this)' > Избриши</button></td>";
+      tabela[0].appendChild(red);
+    }
+
+
+    var  masko = document.getElementById("masko").selected;
+    if(masko===true){
+      red.style.background="blue";
+    }
+    else{
+      red.style.background="pink";
+    }
+
+    //praznenje polinja
+    var y= document.getElementById("prazno");
+    var x= document.getElementsByTagName("input");
+    for (var i=0;i<x.length;i++){
+      x[i].value='';
+      y.selected=true;
+
+    }
+
+  }
+  function potvrda(kopce){
+
+    console.log(`Ova vrakjat ${masko}`);
+    brojac++;
+    var br=document.getElementById("potrvdeni");
+    br.innerHTML=brojac;
+    kopce.disabled=true;
+    kopce.nextElementSibling.disabled=true;
+  }
+  function  izbrisi(kopce){
+    var roditel = kopce.parentNode.parentNode;
+    roditel.remove();
+  }
+
+</script>
+</body>
+</html>

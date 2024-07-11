@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<body>
+
+<style>
+
+    input, select{
+        position: relative;
+        left: 200px;
+        bottom:15px;
+        margin: 0.5px;
+    }
+    p{
+        margin: 0.5px;
+    }
+    #klik{
+        position: relative;
+        left: -90px;
+        top: 10px;
+        margin-bottom: 30px;
+    }
+   .naslov{
+       padding-bottom: 30px;
+       font-size: 30px;
+   }
+   #gl{
+       margin-left: 70px;
+   }
+</style>
+<p class="naslov" id="gl">  <b>Регистрирај лет</b></p>
+<p>Име и презиме</p>
+<input type="text" id="ime" y>
+<p>Ознака на летало</p>
+<input id="oznaka" type="text">
+<p> Координати на лет</p>
+<input type="number" id="koordinati">
+<p> Радиус на лет</p>
+<input id="radius" type="number">
+<p> Висина на лет </p>
+<input id="visina" type="number">
+<p> Тип на летало</p>
+<select id="tip">
+    <option value="Едрилица">Едрилица</option>
+    <option value="Дрон">Дрон</option>
+</select>
+<button id="klik" onclick="proverka()"> Најави</button>
+<p class="naslov"> <b>Регистрирани летови  </b></p>
+<p> <b> Број на пријавени летови: <span id="brojac">0 </span></b></p>
+<ul id="ulista">
+
+</ul>
+
+<script>
+var br=0;
+function proverka(){
+    var x = document.getElementsByTagName("input");
+    console.log(x);
+    for (var i=0;i<x.length;i++){
+        if (x[i].value===''){
+            alert('Невалиден внес. Пополни ги сите полиња!');
+            return 0;
+        }
+    }
+    var oznaka = document.getElementById("oznaka").value;
+    if (oznaka.match(/^Z3-UNR-\d{4}$/)) {
+        // alert("Валидна ознака на летало!");
+        digits(oznaka);
+    }
+    else {
+        alert("Невалидна ознака на летало!");
+        return 0;
+    }
+}
+function  digits(oznaka){
+    oznaka= oznaka.toString();
+    console.log(typeof(oznaka));
+    var brojki = oznaka.slice(-4);
+
+    console.log(brojki);
+    var flag=1;
+    for (var i=0;i<brojki.length;i++){
+        if(brojki[0]!=brojki[i]){
+            flag=0;
+        }
+    }
+    if(flag==0){
+        var radius = document.getElementById("radius").value;
+        radius=parseInt(radius);
+        console.log(`Radiusot e ${radius}`);
+        var visina = document.getElementById("visina").value;
+        visina=parseInt(visina);
+        if(radius > 500 && visina>150){
+            alert("Висината и радиусот се над дозволеното!");
+            return 0;
+        }
+        else{
+            // alert("Dojde do delot za pecatenje!");
+            zapis();
+        }
+    }
+    if(flag) {
+        // alert("Dojde do delot za pecatenje!");
+        br++;
+        document.getElementById("brojac").innerHTML=br;
+        zapis();
+    }
+}
+function zapis() {
+    let x = document.getElementsByTagName("input");
+
+
+    let ime = document.getElementById("ime").value;
+    console.log(ime);
+    let oznaka = document.getElementById("oznaka").value ;
+    console.log(oznaka);
+    let koordinati = document.getElementById("koordinati").value;
+    console.log(koordinati);
+    let visina= document.getElementById("visina").value;
+    console.log(visina);
+    let radius= document.getElementById("radius").value;
+    let tip =document.getElementById("tip").value;
+    console.log(tip);
+
+
+    let ulista= document.getElementById("ulista");
+    let lItem= document.createElement("li");
+    let divItem= document.createElement('div');
+    divItem.innerHTML+="<p> "+ ime +", "+ oznaka +"</p><p>Радиус: "+ radius +", Висина:  "+visina+"</p><p>"+tip+"</p>";
+    divItem.innerHTML+="<button onclick='potvrdi(this) '>Потврди </button><button onclick='otkazi(this)'>Откажи </button>"
+
+    lItem.append(divItem);
+    ulista.append(lItem);
+
+
+    for (var i = 0; i < x.length; i++) {
+        x[i].value = ''
+    }
+}
+function potvrdi(item){
+    item.parentNode.style.background="green";
+    if(item.tip.value==="Едрилица"){
+        item.parentNode.parentNode.style.borderColor = "black";
+
+    }
+    else{
+        if(item.visina.value===item.radius.value){
+            item.parentNode.parentNode.style.borderColor = "black";
+
+        }
+    }
+    item.remove();
+}
+function  otkazi(item){
+    let i=   item.parentNode.parentNode;
+    i.remove();
+    br--;
+    document.getElementById("brojac").innerHTML=br.toString();
+}
+</script>
+
+</body>
+</html>

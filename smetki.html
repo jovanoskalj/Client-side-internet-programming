@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Систем на сметки </title>
+</head>
+<body>
+<style>
+  input{
+    position: relative;
+    top:-33px;
+    left:150px;
+    margin: -50px;
+
+  }
+  button{
+    display: block;
+
+
+  }
+</style>
+<h2>Систем на сметки</h2>
+<p>Име:</p>
+<input id="ime">
+<p>Презиме:</p>
+<input id="prezime">
+<p>ID: </p>
+<input id="ID">
+<p>Промет:</p>
+<input id="promet">
+<button onclick="proverka()">Зачувај</button>
+<h2>Внесени сметки</h2>
+<div id="pole">
+
+</div>
+
+<script>
+function  proverka() {
+    var x = document.getElementsByTagName("input");
+    for (var i = 0; i < x.length; i++) {
+        if (x[i].value === "") {
+            alert("Пополни ги сите полиња!");
+            return;
+        }
+    }
+    var ident = document.getElementById("ID").value;
+    var br_bukvi = 0;
+    var br_brojki = 0;
+    console.log(ident);
+    if (ident.length != 10) {
+        alert("Погрешен ID");
+        return;
+    } else {
+        for (var i = 0; i < ident.length; i++) {
+            if (ident[i].match(/^[A-Z]$/)) {
+                br_bukvi++;
+            }
+        }
+        if (br_bukvi < 3) {
+            alert("Погрешен ID");
+            return;
+        } else {
+            for (var i = 0; i < ident.length; i++) {
+                if (ident[i].match(/^[0-9]$/)) {
+                    br_brojki++;
+                }
+            }
+            if (br_brojki === 1) {
+                kreiraj();
+                console.log("Gi pomina site uslovi!");
+            }
+        }
+
+    }
+}
+
+    function kreiraj() {
+        var ime = document.getElementById("ime").value;
+        var prezime = document.getElementById("prezime").value;
+        var id = document.getElementById("ID").value;
+        var promet = document.getElementById("promet").value;
+        var smetka = Math.round(Math.random() * 100000);
+
+        console.log(`Math random number ${smetka}`);
+        console.log(ime, prezime, id, promet);
+
+        // let pole1 = document.getElementById("pole").getElementsByClassName("invoice");
+        //  for(var i=0;i<pole1.length;i++){
+        //      if(pole1[i].getElementById("idkupuvac")===id){
+        //          let prva=pole1[i].getElementById("suma").value;
+        //          pole1[i].getElementById("suma").value=prva+smetka;
+        //      }
+        //  }
+        var pole = document.getElementById("pole");
+        var lista = document.createElement("div");
+        lista.className="invoice";
+        lista.innerHTML = "<p>Сметка број: " + smetka + "</p><p>Имe: " + ime + "</p><p> Презиме:" + prezime + " </p><p>ID <span id='idkupuvac'>  " + id + " </span></p><p>Промет:<span id='suma'>" + promet + " </span></p><button onclick='pay(this)' >Плати</button>"
+        pole.append(lista);
+
+        if (promet < 5000) {
+            lista.style.background = "lightgreen";
+            lista.style.border = "1px solid black";
+            lista.style.display = "inline-block";
+        } else {
+            lista.style.background = "red";
+            lista.style.border = "1px solid black";
+            lista.style.display = "inline-block";
+        }
+
+
+        var x = document.getElementsByTagName("input");
+        for (var i = 0; i < x.length; i++) {
+            x[i].value = ""
+        }
+    }
+    function pay(kopce){
+        kopce.disabled = true;
+    }
+
+</script>
+</body>
+</html>

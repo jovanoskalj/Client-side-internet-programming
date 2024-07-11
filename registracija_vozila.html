@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Осигурување на возила</title>
+</head>
+<body>
+<style>
+  input{
+    position: relative;
+    left:150px;
+    top:-33px;
+  }
+  .opcii span{
+    position: relative;
+    left: 150px;
+    top: -36px;
+  }
+</style>
+<h1>Осигурување на возила</h1>
+<p>Име</p>
+<input id="ime">
+<p>Презиме</p>
+<input id="prezime">
+<p>Регистарска таблица</p>
+<input id="registarska_tablica">
+<p>Година на старост</p>
+<input id="starost">
+<p>Сообраќајна незгода</p>
+<form class="opcii">
+  <input id="option1" type="radio" value="Да" name="options"><span>Да</span>
+  <input id="option2" type="radio" value="Не" name="options"><span>Не</span>
+</form>
+
+
+  <button onclick="generate()">Генерирај сметка</button>
+  <h2> Сметки</h2>
+  <p>Вкупно сметки за плаќање: <span id="brojac_smetki"> 0 </span></p>
+  <div id="glaven_div">
+
+  </div>
+
+</select>
+<script>
+  var brojac=0;
+  var osnovna= 3000;
+  function  generate(){
+      var x = document.getElementsByTagName("input");
+      var option1 = document.getElementById("option1");
+      var option2 = document.getElementById("option2");
+
+      for (var i = 0; i < x.length; i++) {
+        if (x[i].value === "") {
+          alert("Пополни ги сите полиња!");
+          return;
+        }
+      }
+
+      if (!(option1.checked || option2.checked)) {
+        alert("Пополни ги сите полиња!");
+        return;
+      }
+      format();
+
+
+
+  }
+
+
+function format() {
+  var tablica = document.getElementById("registarska_tablica").value;
+  console.log(tablica);
+  if (!tablica.match(/^[A-Z][A-Z]-[0-9][0-9][0-9][0-9]-[A-Z][A-Z]$/)) {
+    alert("Невалиден внес на таблица! Внеси ја во точниот формат.");
+    return;
+  }
+  else{
+    suma();
+  }
+
+}
+function suma(){
+
+    var brojki = document.getElementById("registarska_tablica").value;
+    brojki= brojki.slice(3,7);
+    console.log(brojki);
+    var flag=1;
+    for (var i=0;i<brojki.length;i++){
+      if(brojki[0]!=brojki[i]){
+        flag=0;
+      }
+    }
+    if(flag==1){
+      osnovna+=1000;
+    }
+console.log(`Cenata e ${osnovna}`);
+    var dali_soobrakjajka= document.getElementById("option1").checked;
+
+    if(dali_soobrakjajka.checked){
+      osnovna+=500;
+    }
+    dodadi();
+
+  }
+  function  dodadi() {
+      brojac++;
+      document.getElementById("brojac_smetki").innerHTML = brojac;
+      var x = document.getElementsByTagName("input");
+
+      var ime = document.getElementById("ime").value;
+      var prezime = document.getElementById("prezime").value;
+      var reg_tablica = document.getElementById("registarska_tablica").value;
+      var starost = document.getElementById("starost").value;
+      var soobrakjajka_da = document.getElementById("option1").checked;
+      var soobrakjajka_ne = document.getElementById("option2").checked;
+      console.log(ime, prezime, reg_tablica, starost, soobrakjajka_da, soobrakjajka_ne);
+      var odgovor = "";
+      if (soobrakjajka_da == true) {
+          odgovor = "Има";
+      } else {
+          odgovor = "Нема"
+      }
+      var div_glaven = document.getElementById("glaven_div");
+      var vnatresen_div = document.createElement("div");
+      vnatresen_div.innerHTML = "<p> " + ime + " " + prezime + "</p><p>" + reg_tablica + "</p><p>Сообраќајки: " + odgovor + " </p><p> Старост на возило: " + starost + "</p><p>За плаќање: " + osnovna + "<p>";
+      div_glaven.append(vnatresen_div);
+      if(starost>30){
+          vnatresen_div.style.background="red";
+          vnatresen_div.style.display="inline-block"
+          vnatresen_div.style.border="1px solid black";
+
+      }
+      else{
+          vnatresen_div.style.background="lightgreen";
+          vnatresen_div.style.display="inline-block"
+          vnatresen_div.style.border="1px solid black";
+      }
+      vnatresen_div.innerHTML+="<button onclick='plati(this) '>Плати </button><button onclick='izbrisi(this)'>Избриши</button>"
+
+      for (var i = 0; i < x.length; i++) {
+          if (x[i].type === 'text' || x[i].type === 'number') {
+              x[i].value = '';
+
+          } else if (x[i].type === 'radio') {
+              x[i].checked = false;
+          }
+      }
+      osnovna = 3000; // Reset the total cost if needed
+  }
+  function  plati(kopce){
+ kopce.disabled=true;
+ kopce.nextElementSibling.disabled=true;
+  }
+function  izbrisi(kopce){
+var roditel= kopce.parentNode;
+roditel.remove();
+brojac--;
+document.getElementById("brojac_smetki").innerHTML = brojac;
+}
+</script>
+</body>
+</html>

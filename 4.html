@@ -1,0 +1,38 @@
+<!--Да се креира поле од објекти, каде секој објект репрезентира книга со следните-->
+<!--својства title (string), author (string), и alreadyRead (boolean кој означува дали е прочитана или не).-->
+<!--Да се изминaт сите објекти од полето и за секој објект да се испечати авторот, името на книгата и-->
+<!--врз основа на тоа дали е прочитана или не, да се испечати соодветна порака.-->
+<!--Пр.-->
+<!--'You already read "The Hobbit" by J.R.R. Tolkien'-->
+<!--'You still need to read "The Lord of the Rings" by J.R.R. Tolkien.'-->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body><script>
+  // Дефинирање на класата Book
+class Book {
+constructor(title, author, alreadyRead) {
+this.title = title;
+this.author = author;
+this.alreadyRead = alreadyRead;
+}
+}
+
+const books = [
+new Book("Книга 1", "Автор 1", true),
+new Book("Книга 2", "Автор 2", false),
+new Book("Книга 3", "Автор 3", true),
+];
+
+for (const book of books) {
+const readStatus = book.alreadyRead ? "прочитана" : "не е прочитана";
+console.log(`Книгата "${book.title}" од ${book.author} e ${readStatus}.`);
+}
+</script>
+</body>
+</html>

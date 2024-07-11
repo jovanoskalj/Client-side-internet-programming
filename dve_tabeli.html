@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<style>
+    tr,td,table{
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+    #used{
+        display: inline-block;
+        position: relative;
+        right:-500px;
+        top:-15px;
+    }
+    #unused{
+        display: inline-block;
+
+    }
+
+</style>
+<h2>Online shop</h2>
+<p>Name and surname</p>
+<input type="text" id="name">
+<p> Item</p>
+<input type="text" id="item">
+<p>Item code</p>
+<input type="text" id="itemcode">
+<p>Item description</p>
+<input type="text" id="desc">
+<p>Price</p>
+<input type="number" id="price">
+<p>Used</p>
+<select>
+    <option id="prazno"></option>
+    <option id="koristeno">Used</option>
+    <option id="nekoristeno">Un-used</option>
+</select>
+<button onclick="add()">Add</button>
+<p>Active items:<span id="active">0</span></p>
+<div id="unused">
+    <h2>Unused items</h2>
+    <table id="table1">
+        <thead>
+        <th>Name</th>
+        <th>Item</th>
+        <th>Price</th>
+        <th>Code</th>
+        <th>Number</th>
+        <th>Actions</th>
+        </thead>
+    </table>
+</div>
+<div id="used">
+    <h2>Unused items</h2>
+    <table id="table2">
+        <thead>
+        <th>Name</th>
+        <th>Item</th>
+        <th>Price</th>
+        <th>Code</th>
+        <th>Number</th>
+        <th>Actions</th>
+        </thead>
+    </table>
+</div>
+<script>
+    var brojac=0;
+    var niza=[];
+    function add(){
+        var x=document.getElementsByTagName("input");
+        var select = document.getElementById("prazno").selected;
+        var kod = document.getElementById("itemcode").value;
+
+        for (var i=0;i<x.length;i++){
+            if(x[i].value===""){
+                alert("Popolni gi site polinja");
+                return;
+            }
+            if(select===true){
+                alert("Popolni gi site polinja");
+                return;
+            }
+        }
+        if(niza.includes(kod)){
+            alert("Postoi vekje vakov kod!");
+            return;
+        }
+        niza.push(kod);
+        var cena = document.getElementById("price").value;
+        cena= parseInt(cena);
+        if (cena<=0){
+            alert("Vnesi validna vrednost na cena!");
+            return;
+        }
+        else{
+
+            cena+= cena*0.1;
+            var kataloski='';
+            for (var i=0;i<kod.length;i++){
+                if(isNaN(kod[i]) && kod[i]!=="!"){
+                    kataloski+=kod[i];
+                }
+            }
+            console.log(kataloski);
+            var name = document.getElementById("name").value;
+            var item= document.getElementById("item").value;
+
+            var koristeno = document.getElementById("koristeno").selected;
+            if(koristeno){
+                brojac++;
+                var active=document.getElementById("active");
+                active.innerHTML=brojac;
+                var tabela1=document.getElementById("table1");
+                var red= document.createElement("tr");
+                red.innerHTML=" <td>"+name+"</td><td>"+item+"</td><td>"+ cena +"</td><td>"+kod+"</td><td>"+kataloski+"</td> <td><button onclick='prodadi(this)'>Sold</button></td>";
+                tabela1.append(red);
+            }
+            else{
+                brojac++;
+                var active=document.getElementById("active");
+                active.innerHTML=brojac;
+                var tabela2=document.getElementById("table2");
+                var red= document.createElement("tr");
+                red.innerHTML=" <td>"+name+"</td><td>"+item+"</td><td>"+ cena +"</td><td>"+kod+"</td><td>"+kataloski+"</td> <td><button onclick='prodadi(this)'>Sold</button></td>";
+                tabela2.append(red);
+            }
+        }
+    }
+    function  prodadi(kopce){
+        brojac--;
+        var active=document.getElementById("active");
+        active.innerHTML=brojac;
+       var red= kopce.parentNode.parentNode;
+       kopce.remove();
+       red.style.background="yellow";
+
+
+    }
+</script>
+
+</body>
+</html>

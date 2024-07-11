@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Prv kolokvium 3</title>
+</head>
+<body>
+
+<input type="text" id="vnes">
+
+<button onclick="naLevo()"><</button>
+
+<button onclick="naDesno()">></button>
+
+<button onclick="convert()">CONVERT</button>
+
+<button onclick="storee()">STORE</button>
+
+<button onclick="checkk()">CHECK</button>
+
+<div id="div">
+    <p id="prazen">
+
+    </p>
+    <ul id="storedNumbers"></ul>
+</div>
+
+<script>
+    function naLevo() {
+        var broj = document.getElementById("vnes");
+        var vredonst = parseInt(broj.value);
+        let prviDve = Math.floor(vredonst / 100000000);
+        // console.log(prviDve);
+        let ostanati = Math.floor(vredonst % 100000000);
+        // console.log(ostanati);
+        vredonst = ostanati * 100 + prviDve;
+        // console.log(vredonst);
+        broj.value = vredonst.toString();
+    }
+
+    function naDesno() {
+        var broj = document.getElementById("vnes");
+        var vrednost = parseInt(broj.value);
+        var posledni = Math.floor(vrednost%100);
+        var prvaCifra = Math.floor(vrednost/100);
+        vrednost = prvaCifra + posledni * 100000000;
+        console.log(vrednost);
+        broj.value = vrednost.toString();
+
+    }
+
+    function convert()
+    {
+        var broj = document.getElementById("vnes");
+        var vrednost =broj.value.toString();
+        var resultString = "";
+        for (var i=0;i<vrednost.length;i++)
+        {
+            var digit = parseInt(vrednost[i]);
+            if(digit<2)
+            {
+                digit = 10 - (digit+2);
+            }
+            else
+            {
+                digit-=2;
+            }
+            resultString+=digit;
+        }
+        broj.value = resultString;
+    }
+
+    function sovrsenBroj()
+    {
+        var counter=0;
+        var broj = document.getElementById("vnes");
+        var vrednost = broj.value.toString();
+        for (var i=0;i<vrednost.length;i++)
+        {
+            var digit = parseInt(vrednost[i]);
+            if(digit%3===0)
+            {
+                counter++;
+            }
+        }
+        if(counter>=3)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    function checkk()
+    {
+        if(sovrsenBroj())
+        {
+            var poraka = document.getElementById("prazen");
+            poraka.innerHTML = "Sovrsen broj!"
+        }
+    }
+
+    function storee()
+    {
+        var broj = document.getElementById("vnes").value;
+        var pole = document.getElementById("storedNumbers");
+        var item = document.createElement("li");
+        item.innerHTML = broj;
+        pole.append(item);
+    }
+</script>
+
+
+</body>
+</html>

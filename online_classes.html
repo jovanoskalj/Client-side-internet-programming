@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<style>
+  tr,table,th{
+    border: 1px solid black;
+  }
+select,option{
+  position: relative;
+  left:140px;
+  top:-15px;
+}
+  input{
+    position: relative;
+    left:140px;
+    top:-15px;
+  }
+button{
+  display: block;
+}
+</style>
+<h1> Online classes</h1>
+<div>Name and surname</div>
+<input type="text" id="name">
+<div>Email</div>
+<input type="text" id="mail">
+<div>Age</div>
+<input type="number" id="age">
+<div>Username</div>
+<input type="text" id="username">
+<div>Password</div>
+<input type="password" id="pass">
+<div>Role</div>
+<select>
+  <option id="blank"></option>
+  <option id="teacher">Teacher</option>
+  <option id="student">Student</option>
+</select>
+<button onclick="check()">Add</button>
+<p>Available teachers: <span id="available">0</span></p>
+<h2>Users</h2>
+<table id="tabela">
+  <thead>
+  <th>Name</th>
+  <th>Username</th>
+  <th>Email</th>
+  <th>Age</th>
+  <th>Role</th>
+  <th>Actions</th>
+  </thead>
+</table>
+
+</body>
+<script>
+  var brojac=0;
+  var existingUsernames = [];
+  function check() {
+    var x = document.getElementsByTagName("input");
+    var pole = document.getElementById("blank").selected;
+    console.log(pole);
+    for (var i = 0; i < x.length; i++) {
+      if (x[i].value === "") {
+        alert("Внеси ги сите полиња!")
+        return;
+
+      }
+    }
+    if (pole === true) {
+      alert("Внеси ги сите полиња!")
+      return;
+    }
+    var role = '';
+    var opcii = document.getElementsByTagName("option")
+    for (var i = 0; i < opcii.length; i++) {
+      if (opcii[i].selected) {
+        role = opcii[i].value;
+      }
+    }
+    console.log(role);
+    var lozinka = document.getElementById("pass").value;
+    var br_bukvigolemi = 0;
+    var br_brojki = 0;
+    for (var i = 0; i < lozinka.length; i++) {
+      if (lozinka.length < 10) {
+        alert("Погрешна лозинка")
+        return;
+      }
+      if (lozinka[i] !== lozinka[i].toLowerCase()) {
+        br_bukvigolemi++;
+      }
+      if (!isNaN(lozinka[i])) {
+        br_brojki++;
+      }
+    }
+    console.log(br_bukvigolemi, br_brojki);
+    if (br_bukvigolemi === 0 || br_brojki === 0) {
+      alert("Погрешна лозинка")
+      return;
+    }
+    var godini = document.getElementById("age").value;
+    if ((godini < 18) && role === "Teacher") {
+      alert("Не можеш да бидеш професор")
+      return
+    }
+    var username = document.getElementById("username").value;
+    var mail = document.getElementById("mail").value;
+    var age = document.getElementById("age").value;
+    var name=document.getElementById("name").value;
+    var tabela = document.getElementById("tabela");
+    var red = document.createElement("tr");
+
+// Проверка на корисник
+    if (existingUsernames.includes(username)) {
+      alert("Корисничкото име е зафатено!");
+      return;
+    }
+    existingUsernames.push(username);
+
+
+    if (role === "Teacher") {
+      red.innerHTML = "<td>" + name + "</td>" + username + "<td>" + mail + "</td>" + age + "<td>" + role + "</td><button onclick='hire(this)'>Hire</button><td>"
+      tabela.append(red);
+      red.style.background="lightgreen";
+      brojac++;
+      var prof= document.getElementById("available");
+      available.innerHTML=brojac;
+    }
+    else{
+      red.innerHTML = "<td>" + name + "</td>" + username + "<td>" + mail + "</td>" + age + "<td>" + role + "</td> <td>"
+      tabela.append(red);
+      red.style.background="lightblue";
+    }
+
+  }
+  function  hire(kopce){
+    kopce.parentNode.style.background="lightgray"
+    kopce.remove();
+    brojac--;
+    var prof= document.getElementById("available");
+    available.innerHTML=brojac;
+
+
+  }
+</script>
+</html>

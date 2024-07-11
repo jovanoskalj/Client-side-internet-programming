@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<input id="pole" type="text">
+<button onclick="postavi()">Постави</button>
+<div id="vnes"></div>
+<script>
+    function postavi() {
+        var input = document.getElementById("pole").value;
+        var zborovi = input.split(",");
+
+        // Make sure there are enough elements in the array
+        if (zborovi.length >= 4) {
+            var boja = zborovi[0].trim(); // Trim to remove leading/trailing spaces
+            var shirina = zborovi[1].trim();
+            var visina = zborovi[2].trim();
+            var tekst = zborovi.slice(3).join(',').trim(); // Join remaining elements into text
+
+            // Now you can use these variables as needed
+            console.log(`Boja: ${boja}, Širina: ${shirina}, Visina: ${visina}, Tekst: ${tekst}`);
+        } else {
+            console.error("Invalid input. Please provide at least four values separated by commas.");
+        }
+        var vnes= document.getElementById("vnes");
+        var figura = document.createElement("div");
+        figura.innerHTML="<p>"+tekst+"</p>";
+        vnes.append(figura);
+        figura.style.background=boja;
+        figura.style.width=shirina + "px";
+        figura.style.height=visina + "px";
+
+    }
+</script>
+</body>
+</html>

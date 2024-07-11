@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<style>
+  input{
+    position: relative;
+    top:-33px;
+    left: 133px;
+  }
+  select{
+    position: relative;
+    top:-33px;
+    left: 133px;
+  }
+  button{
+    display: block;
+  }
+</style>
+<h2>User Cards</h2>
+<p>Username</p>
+<input type="text"  id="username">
+<p>ID</p>
+<input type="text"  id="ID">
+<p>Width</p>
+<input type="number"  id="width">
+<p>Height</p>
+<input type="number"  id="height">
+<p>Color</p>
+<select id="opcii">
+  <option id="prazno"></option>
+  <option id="blue">Blue</option>
+  <option id="red">Red</option>
+  <option id="green">Green</option>
+  <option id="yellow">Yellow</option>
+</select>
+<button onclick="add()">Add</button>
+<p>Вкупно продадени <span id="prodadeni">0</span></p>
+<div id="polinja">
+
+</div>
+<script>
+    var niza_postoecki=[];
+  var brojac=0;
+function add(){
+  var x= document.getElementsByTagName("input");
+  var prazno = document.getElementById("prazno").selected;
+  for (var i=0;i<x.length;i++){
+    if(x[i].value===""){
+      alert("Popolni gi site polinja!");
+      return;
+    }
+  }
+  if(prazno===true){
+    alert("Popolni gi site polinja!");
+    return;
+  }
+console.log(prazno);
+  var ID= document.getElementById("ID").value;
+  var regex = /^[a-z]$/
+  for (var i=0;i<ID.length;i++){
+     if(!ID[i].match(regex)){
+         alert("Nevaliden format na ID!");
+         return;
+     }
+  }
+  var width= document.getElementById("width").value;
+  var height=document.getElementById("height").value;
+  if(width==0 || width>=500){
+      alert("Nevalidni vrednosti na visina i shirina!")
+      return;
+  }
+    if(height== 0|| height>=500){
+        alert("Nevalidni vrednosti na visina i shirina!")
+        return;
+    }
+  var opcii=document.getElementById("opcii");
+  var boja='';
+  var cena = (width*height)*0.5;
+  for (var i=0;i<opcii.length;i++){
+      if(opcii[i].selected){
+          boja= opcii[i].value;
+      }
+  }
+  console.log(boja);
+  if(boja=="Red"){
+      cena+=1000;
+  }
+  console.log(cena);
+  //update na postoecki
+    if (niza_postoecki.includes(ID)) {
+
+        var i = niza_postoecki.indexOf(ID);
+        var existingElement = document.getElementById("polinja").children[i];
+
+        // Update values
+        existingElement.querySelector("p:nth-of-type(2)").innerHTML = "Width: " + width;
+        existingElement.querySelector("p:nth-of-type(3)").innerHTML = "Height: " + height;
+        existingElement.querySelector("p:nth-of-type(4)").innerHTML = "Color: " + boja;
+        existingElement.querySelector("p:nth-of-type(5)").innerHTML = "Vkupna suma<span > " + cena + "</span>";
+
+        existingElement.style.background = boja;
+        existingElement.style.width = width + "px";
+        existingElement.style.height = height + "px";
+
+        return;
+    }
+
+    niza_postoecki.push(ID);
+
+
+  var pole = document.getElementById("polinja");
+  var kopce = document.createElement("div");
+  kopce.innerHTML="<p>Id: "+ ID +"</p>" +
+      "<p> Width:"+width+"</p>" +
+      "<p>Height:"+height+"</p>" +
+      "<p>Color "+boja+"</p>" +
+      "<p>Vkupna suma: "+ cena+"</p>" +
+      "<button onclick='sell(this)'>Sell</button>"
+
+    pole.append(kopce);
+  kopce.style.background=boja;
+  kopce.style.width=width+"px";
+  kopce.style.height=height+"px";
+  kopce.style.display="block";
+}
+function  sell(button){
+    brojac++
+    var prodadeni = document.getElementById("prodadeni");
+    prodadeni.innerHTML=brojac;
+    button.parentNode.remove();
+
+}
+
+</script>
+</body>
+</html>

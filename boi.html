@@ -1,0 +1,278 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Boi</title>-->
+<!--</head>-->
+<!--<body>-->
+<!--<div>Username</div>-->
+<!--<input id="username" type="text">-->
+<!--<div>ID</div>-->
+<!--<input id="ID" type="text">-->
+<!--<div>Width</div>-->
+<!--<input id="width" type="number">-->
+<!--<div>Height</div>-->
+<!--<input id="height" type="number">-->
+<!--<div>Color</div>-->
+<!--<select id="opcii">-->
+<!--  <option id="neselektirano">-->
+
+<!--  </option>-->
+<!--  <option id="red">-->
+<!--    red-->
+<!--  </option>-->
+<!--  <option id="yellow">-->
+<!--   yellow-->
+<!--  </option>-->
+<!--  <option id="green">-->
+<!--    green-->
+<!--  </option>-->
+<!--  <option id="blue">-->
+<!--    blue-->
+<!--  </option>-->
+<!--</select>-->
+<!--<button onclick="generiraj()"> Add </button>-->
+<!--<p>Вкупно продадени: <span id="prodadeni"> 0</span></p>-->
+<!--<div id="dodavanje">-->
+
+<!--</div>-->
+<!--</body>-->
+<!--<script>-->
+<!--  var brojac=0;-->
+<!--  var niza = []-->
+<!--  function  generiraj(){-->
+<!--    var x= document.getElementsByTagName("input");-->
+<!--    var opcii= document.getElementById("neselektirano").selected;-->
+<!--    var ident = document.getElementById("ID").value;-->
+<!--    console.log(opcii);-->
+<!--    for (var i=0;i<x.length;i++){-->
+<!--      if(x[i].value==""){-->
+<!--        alert("Пополни ги сите полиња!");-->
+<!--        return;-->
+<!--      }-->
+<!--    }-->
+<!--    if(opcii===true){-->
+<!--      alert("Пополни ги сите полиња!");-->
+<!--      return;-->
+<!--    }-->
+<!--    else{-->
+<!--      for (var i=0;i<ident.length;i++){-->
+<!--        if(!isNaN(ident[i])){-->
+<!--          alert("Невалиден формат на ИД,број!");-->
+<!--          return;-->
+<!--        }-->
+<!--        else if(ident[i]!==ident[i].toLowerCase()){-->
+<!--          alert("Невалиден формат на ИД, голема буква!");-->
+<!--          return;-->
+<!--        }-->
+
+<!--      }-->
+<!--      pole();-->
+<!--    }-->
+
+<!--  }-->
+<!--  function  pole(){-->
+<!--    var height = document.getElementById("height").value;-->
+<!--    var width = document.getElementById("width").value;-->
+<!--    var ident = document.getElementById("ID").value;-->
+<!--    height=parseInt(height)-->
+<!--    width=parseInt(width)-->
+<!--    var opcii = document.getElementById("opcii");-->
+<!--    var boja = "";-->
+<!--    for (var i=0;i<opcii.length;i++){-->
+<!--      if(opcii[i].selected===true){-->
+<!--        boja= opcii[i].value;-->
+<!--      }-->
+<!--    }-->
+<!--    console.log(`Odbrana e opcija ${boja}`);-->
+<!--    if(width <= 0 || width > 500){-->
+<!--      alert("Висината и ширината се надвор од дозволената граница!");-->
+<!--      return;-->
+<!--    }-->
+<!--    else if(height <=0 || height > 500){-->
+<!--      alert("Висината и ширината се надвор од дозволената граница!");-->
+<!--      return;-->
+<!--    }-->
+
+<!--    var pixel = height*width;-->
+<!--    pixel= parseInt(pixel);-->
+<!--    console.log(pixel);-->
+<!--    var cena = pixel*0.5;-->
+<!--    if(boja==="red"){-->
+<!--      cena+=1000;-->
+<!--    }-->
+<!--console.log(`Pari ${cena}`)-->
+<!--    // var ID_segashen=document.getElementById("ID").value;-->
+<!--    // var div_glaven = document.getElementById("dodavanje");-->
+<!--    // var cena_new=0;-->
+<!--    // for (var i=0;i<div_glaven.length;i++){-->
+<!--    //   if(div_glaven.children[i].getElementById("ident").match(ID_segashen)){-->
+<!--    //     cena_new=div_glaven.children[i].getElementById("cena_nova").value + cena;-->
+<!--    //   }-->
+<!--    // }-->
+<!--    if (niza.includes(ident)) {-->
+<!--      var i = niza.indexOf(ident);-->
+<!--      // Update existing element-->
+<!--      var existingElement = document.getElementById("dodavanje").children[i];-->
+
+<!--      // Update values-->
+<!--      // existingElement.querySelector("p:nth-of-type(2)").innerHTML = "Width:" + width;-->
+<!--      // existingElement.querySelector("p:nth-of-type(3)").innerHTML = "Height" + height;-->
+<!--      // existingElement.querySelector("p:nth-of-type(4)").innerHTML = "Color: " + boja;-->
+<!--      // existingElement.querySelector("p:nth-of-type(5)").innerHTML = "Vkupna suma<span > " + cena + "</span>";-->
+
+<!--      return;-->
+<!--    }-->
+<!--      var dodavanje= document.getElementById("dodavanje");-->
+<!--    var polinja = document.createElement("div");-->
+<!--    polinja.innerHTML="<p>Id<span> "+ident+"</span></p><p>Width:"+width+"</p><p>Height"+height+"</p><p>Color: "+boja+"</p><p>Vkupna suma<span > "+cena+"</span></p><button onclick='prodaj(this)'>Sell</button>"-->
+<!--    dodavanje.append(polinja);-->
+<!--    polinja.style.background=boja;-->
+<!--    polinja.style.display="inline-block";-->
+<!--    polinja.style.border="1px solid black"-->
+<!--    polinja.style.width = width + "px";  //bez px ne rabotit-->
+<!--    polinja.style.height = height + "px";-->
+
+
+<!--  }-->
+
+<!--  function prodaj(kopce){-->
+<!--   brojac++;-->
+<!--   var br= document.getElementById("prodadeni");-->
+<!--   br.innerHTML=brojac;-->
+<!--   kopce.parentNode.remove();-->
+
+<!--  }-->
+
+<!--</script>-->
+<!--</html>-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Boi</title>
+</head>
+<body>
+<div>Username</div>
+<input id="username" type="text">
+<div>ID</div>
+<input id="ID" type="text">
+<div>Width</div>
+<input id="width" type="number">
+<div>Height</div>
+<input id="height" type="number">
+<div>Color</div>
+<select id="opcii">
+  <option id="neselektirano"></option>
+  <option id="red">red</option>
+  <option id="yellow">yellow</option>
+  <option id="green">green</option>
+  <option id="blue">blue</option>
+</select>
+<button onclick="generiraj()"> Add </button>
+<p>Вкупно продадени: <span id="prodadeni"> 0</span></p>
+<div id="dodavanje"></div>
+
+<script>
+  var brojac = 0;
+  var niza = [];
+
+  function generiraj() {
+    var x = document.getElementsByTagName("input");
+    var opcii = document.getElementById("neselektirano").selected;
+    var ident = document.getElementById("ID").value;
+
+    for (var i = 0; i < x.length; i++) {
+      if (x[i].value === "") {
+        alert("Пополни ги сите полиња!");
+        return;
+      }
+    }
+
+    if (opcii === true) {
+      alert("Пополни ги сите полиња!");
+      return;
+    } else {
+      for (var i = 0; i < ident.length; i++) {
+        if (!isNaN(ident[i])) {
+          alert("Невалиден формат на ИД, број!");
+          return;
+        } else if (ident[i] !== ident[i].toLowerCase()) {
+          alert("Невалиден формат на ИД, голема буква!");
+          return;
+        }
+      }
+      pole();
+    }
+  }
+
+  function pole() {
+    var height = document.getElementById("height").value;
+    var width = document.getElementById("width").value;
+    var ident = document.getElementById("ID").value;
+    height = parseInt(height);
+    width = parseInt(width);
+    var opcii = document.getElementById("opcii");
+    var boja = "";
+
+    for (var i = 0; i < opcii.length; i++) {
+      if (opcii[i].selected === true) {
+        boja = opcii[i].value;
+      }
+    }
+
+    if (width <= 0 || width > 500 || height <= 0 || height > 500) {
+      alert("Висината и ширината се надвор од дозволената граница!");
+      return;
+    }
+
+    var pixel = height * width;
+    pixel = parseInt(pixel);
+    var cena = pixel * 0.5;
+
+    if (boja === "red") {
+      cena += 1000;
+    }
+
+
+  //додавање во постоечка
+    if (niza.includes(ident)) {
+      // Update existing element
+      var i = niza.indexOf(ident);
+      var existingElement = document.getElementById("dodavanje").children[i];
+
+      // Update values
+      existingElement.querySelector("p:nth-of-type(2)").innerHTML = "Width: " + width;
+      existingElement.querySelector("p:nth-of-type(3)").innerHTML = "Height: " + height;
+      existingElement.querySelector("p:nth-of-type(4)").innerHTML = "Color: " + boja;
+      existingElement.querySelector("p:nth-of-type(5)").innerHTML = "Vkupna suma<span > " + cena + "</span>";
+
+      existingElement.style.background = boja;
+      existingElement.style.width = width + "px";
+      existingElement.style.height = height + "px";
+
+      return;
+    }
+
+    niza.push(ident);
+
+    var dodavanje = document.getElementById("dodavanje");
+    var polinja = document.createElement("div");
+    polinja.innerHTML = "<p>Id<span> " + ident + "</span></p><p>Width: " + width + "</p><p>Height: " + height + "</p><p>Color: " + boja + "</p><p>Vkupna suma<span > " + cena + "</span></p><button onclick='prodaj(this)'>Sell</button>"
+    dodavanje.append(polinja);
+    polinja.style.background = boja;
+    polinja.style.display = "inline-block";
+    polinja.style.border = "1px solid black"
+    polinja.style.width = width + "px";
+    polinja.style.height = height + "px";
+  }
+
+  function prodaj(kopce) {
+    brojac++;
+    var br = document.getElementById("prodadeni");
+    br.innerHTML = brojac;
+    kopce.parentNode.remove();
+  }
+</script>
+</body>
+</html>
